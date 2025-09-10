@@ -6,6 +6,7 @@ import { typeDefs } from "./graphql/schema.js";
 import { resolvers } from "./graphql/schema.js";
 import dotenv from 'dotenv'
 import cors from "cors"
+import accountRoutes from "./routes/accountRoutes.js"
 
 import { authMiddleWare } from './middleware/auth.js'
 dotenv.config()
@@ -19,8 +20,11 @@ const server = new ApolloServer({
     resolvers
 });
 
+
+
 const startServer = async () => {
     await server.start();
+    app.use("/api/accounts", accountRoutes)
     app.use(
         '/graphql',
         cors(),
