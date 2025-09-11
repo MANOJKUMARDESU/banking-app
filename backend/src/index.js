@@ -7,7 +7,7 @@ import { resolvers } from "./graphql/schema.js";
 import dotenv from 'dotenv'
 import cors from "cors"
 import accountRoutes from "./routes/accountRoutes.js"
-
+import loanRoutes from './routes/loanRoutes.js';
 import { authMiddleWare } from './middleware/auth.js'
 dotenv.config()
 
@@ -25,6 +25,7 @@ const server = new ApolloServer({
 const startServer = async () => {
     await server.start();
     app.use("/api/accounts", accountRoutes)
+    app.use('/api/loans', loanRoutes);
     app.use(
         '/graphql',
         cors(),
@@ -46,7 +47,5 @@ mongoose.connect('mongodb://localhost:27017/banking-app')
             console.log(`Server ready at http://localhost:${PORT}/graphql`);
         });
     }).catch(err => console.error("Mongodb error:"));
-
-
 
 startServer()
